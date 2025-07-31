@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="estilo.css" rel="stylesheet" media="screen"> 
+			
+    <title>Práctica 5</title>
+</head>
+<body>
+    <script>
+        function DatosValidos(){ //Si los datos son válidos devuelve true
+            var dni = document.getElementById("dni") //DNI:
+            var name = document.getElementById("name") //Nombre:
+            var surname = document.getElementById("surname") // Apellidos:
+            var date_born = document.getElementById("date_born") //Fecha de nacimiento:
+            var sexo = document.getElementsByName("sexo"); //Sexo
+            var glucosa = document.getElementById("glucosa") //Nivel de glucosa
+            var datos_validos=true; //variable resultado
+
+            var soloLetras = /^[A-Za-zÁÉÍÓÚáéíóú\s-]+$/;
+            var soloNumeros = /^\d+$/;
+            if (dni.value.trim() === ""){ //Se comprueba que el valor del DNI es un campo no vacío
+                dni.focus()                             //Se pone el foco en el campo DNI
+                alert("El campo DNI no puede estar vacio.") //Alerta correspondiente
+                datos_validos = false;
+            }
+            else if(!soloNumeros.test(dni.value.trim())){//Controlar valor del DNI
+                dni.focus()                             //Se pone el foco en el campo DNI
+                alert("Introduzca un valor válido DNI") //Alerta correspondiente
+                datos_validos = false;
+            }
+            else{ //Si el DNI está correcto sigo evaluando el siguiente dato
+                if (!soloLetras.test(name.value.trim())) { //se comprueba que el nombre introducido es de tipo string
+                    alert("El valor del nombre no es un valor válido"); //Alerta correspondiente
+                    name.focus();        //Se pone el foco en el campo Nombre
+                    datos_validos = false;
+                }
+                else if (name.value.trim() === "") { //se comprueba que el campo nombre no este vacío
+                    alert("El campo de nombre no puede estar vacío"); //Alerta correspondiente
+                    name.focus();                           //Se pone el foco en el campo Nombre
+                    datos_validos = false;
+                }
+                else{ // Si el campo nombre está correcto sigo evaluando
+                    if (!soloLetras.test(surname.value.trim())) { //se comprueba que los datos de surname sean correctos
+                        alert("El valor de los apellidos no es un valor válido");   //Alerta correspondiente
+                        surname.focus() //Se pone el foco en el campo surname
+                        datos_validos=false;
+                    }
+                    else if (surname.value.trim() === "") { //comprobacion de que el campo apellidos no esté vacío
+                        alert("El campo de apellidos no puede estar vacío"); //Alerta correspondiente
+                        surname.focus();        //Se pone el foco en el campo surname
+                        datos_validos = false;
+                    }
+                    else{ //Si el campo surname está correcto sigo evaluando. Se va a evaluar si los datos introducidos en la fecha de nacimiento son correctos
+                        if ((new Date()-new Date(date_born.value))<=0){ //se compara que la diferencia entre la fecha actual y la introducida no sea negativa
+                            alert("La fecha de nacimiento no es válida") //Alerta correspondiete
+                            date_born.focus() //Se pone el foco en el campo fecha de nacimiento
+                            datos_validos=false;
+                        }
+                        else{//Si el campo fecha de nacimiento está correcto sigo evaluando
+                            if ((!sexo[0].checked) && (!sexo[1].checked)) { //comprobacion de que el campo sexo esté marcado
+                                alert("Por favor completa el campo sexo.") //Alerta correspondiente
+                                datos_validos=false;
+                            }
+                            else{//Si el campo sexo está correcto sigo evaluando
+                                if (glucosa.value.trim() === ""){ //Se comprueba que el valor de la glucosa no es vacío
+                                    alert("Lo siento si no introduce sus valores de glucosa en sangre no podemos realizar un diagnóstico") //Alerta correspondiente
+                                    glucosa.focus(); //Se pone el foco en el campo de la glucosa
+                                    datos_validos = false;
+                                }
+                                else if((glucosa.value<0) || (glucosa.value>1000) || (!soloNumeros.test(glucosa.value.trim()))){            //Controlar el rango de la glucemia de 0 a 1000
+                                    alert("Introduzca un valor válido de glucosa en sangre")
+                                    datos_validos = false;
+                                }
+                            } 
+                        }
+                    }
+                }
+            }
+            return datos_validos;
+                
+            }
+ 
+        function Edad() { //Devuelve la edad actual del paciente
+            //Primero se consigue conocer la edad de la persona
+            var date_born = document.getElementById("date_born").value;
+
+            // Crear un nuevo objeto Date
+            var fechaActual = new Date();
+
+            // Obtengo los componentes de la fecha
+            var dia = fechaActual.getDate();    //Se obtiene el dia completo
+            var mes = fechaActual.getMonth() + 1; // Sumo uno porque los meses en JavaScript van de 0 a 11
+            var anio = fechaActual.getFullYear(); //Se obtiene el año completo
+
+            // Formateamos la fecha
+            var fechaFormateada = dia + "-" + mes + "-" + anio;
+            var fechaNacimiento = new Date(date_born);
+
+            // Convertir las fechas a milisegundos para poder compararlas y calcular Edad en ms
+            var Diferencia_en_ms = fechaActual - fechaNacimiento;
+            var DiasTranscurridos = Diferencia_en_ms / (1000 * 60 * 60 * 24); //Se calcula en dias
+            var EdadActual = Math.floor(DiasTranscurridos / 365.25); //Se pasa a años
+            return EdadActual //Devuelve la edad actual de la persona teniendo en cuenta si ha cumplido ya o no años
+        }
+
+        function Sexo(){ //Devuelve 'false' si el genero es masculino y 'true' si es femenino.
+            var sexo = document.getElementsByName("sexo"); //se obtiene el radio button con name="sexo"
+            if (sexo[0].checked) { //Si el primero está marcado que es el que corresponde con masculino
+                    sexo_biologico="masculino"; //sexo biológico es masculino
+                }
+                else if (sexo[1].checked){ //Si el segundo está marcado que es el que corresponde con femenino
+                    sexo_biologico="femenino";//sexo biológico es femenino
+                }
+            return sexo_biologico
+        }
+
+        function NivelGlucosa(){ //Devuelve si es hiperglucemia, normoglucemia, hipoglucemia
+            var glucosa = document.getElementById("glucosa").value; //Se obtiene los datos de glucosa introducidos por pantalla
+            var estado_Paciente; //Se inicializa la variable estado paciente a la que se le asignará si es normoglucemia, hiperglucemio o hipoglucemia
+        
+            if (glucosa>110){//Si el valor de la glucosa es mayor de 110mg/dl
+                estado_Paciente="Hiperglucemia"
+            }
+            else if (glucosa <= 110 && glucosa >= 66){//Si el valor de la glucosa esta entre 110mg/dl y 66mg/dl
+               estado_Paciente="Normoglucemia"
+            }
+            else { //Si el valor de la glucosa es menor de 66mg/dl. No se controla si es positivo porque contaría como valor no válido y no se permitiría su introduccion
+                estado_Paciente="Hipoglucemia"
+            }
+            return estado_Paciente //Devuelve el estado del paciente
+        }
+
+        function ImprimirRegistro() {//Imprime el registro por pantalla
+            
+            var registro = document.getElementById("registro"); //Se obtiene el elemento contenedor registro
+            var datos = [ //se crea una lista para poder almacenar todos los datos del paciente
+                "Nombre:", document.getElementById("name").value,  //Se obtiene el valor de el NOMBRE
+                "Apellidos:", document.getElementById("surname").value, //Se obtiene el valor de los APELLIDOS
+                "Fecha de nacimiento:", document.getElementById("date_born").value, //Se obtiene el valor de la FECHA DE NACIMIENTO
+                "Edad:", Edad(),    //Se obtiene el valor de la EDAD
+                "Sexo:", Sexo(), //Se obtiene el valor deel SEXO
+                "Nivel de glucosa:", document.getElementById("glucosa").value, //Se obtiene el valor de la GLUCOSA
+                "Valoración:", document.getElementById("valoracion").value //Se obtiene el valor de la VALORACION
+            ];
+            var titulo = document.createElement("h3") //Se crea un elemento titulo que será el valor del DNI para que cada conjunto de datos quede identificado
+            titulo.textContent = "Registro - DNI: " + document.getElementById("dni").value; // Añadir el valor del DNI al título
+            registro.appendChild(titulo)    //Se añade el título al contenedor
+
+            var lista = document.createElement("ul"); //se crea un elemento lista en html donde se tendrán todos los registros
+            for (var i = 0; i < datos.length; i += 2) { //se recorre la lista con los datos almacenado
+                var dato = datos[i];    //Se almacene la etiqueta junto a su valor correspondiente
+                var valor = datos[i + 1];
+
+                var elementoLi = document.createElement("li");  //Se crea una lista
+                elementoLi.innerHTML = `<u>${dato}</u>: ${valor}`; //se añade en formas de pareja 'etiqueta' y 'valor' mostrando la etiqueta subrayada
+                lista.appendChild(elementoLi); //se añade cada dato como elemento de la lista para ese paciente
+            }
+
+            registro.appendChild(lista); //Se añade la lista que contiene todo el conjunto de datos al contenedor registro
+        }
+        
+        function Reset(){ //Limpia todos los campos del formulario
+            document.getElementById("dni").value = "";
+            document.getElementById("name").value = "";
+            document.getElementById("surname").value = "";
+            document.getElementById("date_born").value = "";
+            document.getElementById("hombre").checked = false;
+            document.getElementById("mujer").checked = false;
+            document.getElementById("glucosa").value = "";
+            document.getElementById("valoracion").value = "";
+            document.querySelector('label[for="valoracion"] strong').style.display = 'flex'; //No se muestra en la pantalla la etiqueta valoracion
+            document.getElementById("valoracion").style.display="none";
+        }
+
+        function Diagnostico(){
+            var edad;
+            var estado_Paciente;
+            var valoracion = document.getElementById("valoracion")
+            
+            if(DatosValidos()==true){ //Si los datos introducidos por el usuario son correctos
+                estado_Paciente=NivelGlucosa()//Se determina si el paciente tiene hiperglucemia, normoglucemia, o hipoglucemia
+                edad = Edad(); //Se determina la edad del paciente
+                document.querySelector('label[for="valoracion"]').style.display = 'inline'; //Se muestra en la pantalla la etiqueta valoracion
+                valoracion.style.display="block"; //Se muestra en la pantalla el campo de texto donde se podrá ver la valoración
+                switch(estado_Paciente){
+                    case "Hiperglucemia":
+                        if (edad>=65){
+                            valoracion.value="El usuario al que corresponde los datos introducidos presenta hiperglucemia, dado que es usted mayor de 65 años entra usted en el grupo de riesgo."
+                        }
+                        else{
+                            valoracion.value="El usuario al que corresponde los datos introducidos presenta hiperglucemia."
+                        }
+                        break;
+                    case "Normoglucemia":
+                        if (edad>=65){
+                            valoracion.value="El usuario al que corresponde los datos introducidos presenta normoglucemia, dado que es usted mayor de 65 años entra usted en el grupo de riesgo."
+                        }
+                        else{
+                            valoracion.value="El usuario al que corresponde los datos introducidos presenta normoglucemia."
+                        }
+                        break;
+                    case "Hipoglucemia":
+                        if (edad>=65){
+                            valoracion.value="El usuario al que corresponde los datos introducidos presenta hipoglucemia, dado que es usted mayor de 65 años entra usted en el grupo de riesgo."
+                        }
+                        else{
+                            valoracion.value="El usuario al que corresponde los datos introducidos presenta hipoglucemia."
+                        }
+                        break;
+                }
+                ImprimirRegistro(); 
+            } 
+        }
+        
+    </script>
+    <h1 id="titulo">GLUCÓMETRO</h1>
+    <fieldset>
+    <label for="dni"><strong>(sin letra)* DNI:</strong></label><input type="text" id="dni" name="dni" required><br><!--DNI-->
+    <label for="name"><strong>* Nombre:</strong></label><input type="text" id="name" name="name" required><br><!--Nombre-->
+    <label for="surname"><strong>* Apellidos: </strong></label><input type="text" id="surname" name="surname" required><br><!--Apellido-->
+    <label for="date_born"><strong>* Fecha de Nacimiento</strong></label><input type="date" id="date_born" name="fecha_nacimiento" required><br> <!--Fecha nacimiento-->
+    <label><strong>* Sexo: </strong></label>
+            <input type="radio" id="hombre" name="sexo">
+            <label for="hombre" >Hombre</label>
+            <input type="radio" id="mujer" name="sexo">
+            <label for="mujer" >Mujer</label><br>
+    <label for="glucosa"><strong>Nivel de glucosa en sangre: (mg/dl)</strong></label><input type="text" id="glucosa" required><br>
+    <label for="valoracion"><strong>Valoración:</strong></label><textarea id="valoracion" name="valoracion" ></textarea><br> <!--Valoracion-->
+        <button onclick=Diagnostico()>Hacer Diagnóstico</button>
+        <button onclick=Reset()>Reset</button><!--Boton resetear-->
+    </fieldset>
+    <p>Aquellos campos que presentan un asterisco * son obligatorios</p><br>
+    <div class="registro" id="registro"><h2>Registro</h2>
+       <p>A continuación se presenta un registro de todos los datos introducidos previamente.</p>  
+    </div>
+    
+    <h2>¿Qué criterios se siguen para realizar el diagnóstico?</h2>
+    <p>Entre otros criterios podemos apreciar en la Tabla 1 los niveles preestablecidos para determinar
+        si un paciente presenta: hipoglucemia, normoglucemia o hiperglucemia.
+        Si el paciente es considerado de riesgo por la edad o por algún factor se notificará cuando se haga el diagnóstico.
+    </p>
+    <table id="tabla" >
+        <caption>Criterios de diagnóstico</caption>
+        <tr>
+            <th scope="col">Nivel de glucosa en sangre (mg/dl)</th>
+            <th scope="col">Diagnóstico</th>
+        </tr>
+        <tr>
+            <td>65 o menor</td>
+            <td>Su nivel de glucosa es inferior al recomendado (Hipoglucemia) </td>
+        </tr>
+        <tr>
+            <td>entre 66 y 110</td>
+            <td>Su nivel de glucosa está dentro de los límites recomendados (Normoglucemia)</td>
+        </tr>
+        <tr>
+            <td>mayor que 110</td>
+            <td>Su nivel de glucosa es superior al recomendado (Hiperglucemia)</td> 
+        </tr>
+    </table>    
+</body>
+<footer>
+    <p>Este recurso web está desarrollado por Esther Bermejo Martínez alumna de Ingeniería Biomédica.</p>
+    <p>Creado en noviembre de 2023. Universidad de Alicante.</p>
+</footer>
+</html>

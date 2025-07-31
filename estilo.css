@@ -1,0 +1,120 @@
+body {
+    background-image: url('fondo.jpg');
+    background-size: cover;
+    align-items: center;
+    height: 100vh;
+    margin: 1cm auto;
+    
+   }
+button , input.reset {
+    background-color: #7cc8dc; 
+    border-radius: 16px;
+    padding: 7px;
+    margin:10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    font-family: 'Times New Roman', Times, serif;
+  }
+button:hover, input.reset:hover{
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
+caption{
+    background-color: white;
+    font-size: 24px;
+    border: 2px solid ;
+}
+div > p{
+    font-size: 16px;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+div.registro {
+    background-color: rgb(234, 228, 219);
+    padding: 0.5cm; /* Ajusta el espaciado interno */
+    margin: 0.5cm auto; /* Espacio entre el fieldset y el margen de la pantalla */
+    line-height: 0.75cm;
+    width: 75%; /* Ajusta el ancho del fieldset según tus necesidades */
+    border: 1px solid; /* Borde del fieldset */
+    border-radius: 30px; /* Redondea los bordes del fieldset */
+}
+fieldset{
+    background-color: rgb(234, 228, 219);
+    padding: 1cm; /* Ajusta el espaciado interno */
+    margin: 1cm auto; /* Espacio entre el fieldset y el margen de la pantalla */
+    line-height: 1cm;
+    width: 50%; /* Ajusta el ancho del fieldset según tus necesidades */
+    border: 1px solid; /* Borde del fieldset */
+    border-radius: 30px; /* Redondea los bordes del fieldset */
+}
+footer{
+    margin:0 auto;
+    padding: 0 auto;
+}
+h1{
+    text-align: center; /*Alineación al centro*/
+    font-size: 56px;
+}
+h2, p, li {
+    margin-left:2cm;
+    margin-right: 2cm;
+    line-height: 1cm;
+}
+h3{
+    margin-left:1cm;
+    margin-right: 1cm;
+    line-height: 0.75cm;
+}
+label{
+    margin-right: 0.5cm;
+    font-size: 18px;
+}
+label[for="valoracion"]{
+    display:none;
+}
+
+table {
+    background-color: rgb(234, 228, 219) ;
+    table-layout: fixed;
+    padding:1cm;
+    margin: 1cm auto;
+    max-width:75%;
+    border-collapse:collapse;
+    border: 2px solid ;
+}
+textarea{
+    display:none;
+    width:300px;
+    height:85px;
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 15px;
+}
+th{
+    background-color: white;
+    font-size: 16px;
+    padding: 5px auto;
+    margin: 5px auto;
+}
+    
+td {
+    text-align: center;
+    letter-spacing: 1px;
+    height:40%;
+    padding:0;
+    margin:0;
+    }
+th {
+    letter-spacing: 2px;
+}
+thead th:nth-child(1) {
+    width: 20%;
+}
+      
+thead th:nth-child(2) {
+    width: 10%;
+}
+th,td {
+    padding: 15px;
+    }
+
