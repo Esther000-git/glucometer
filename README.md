@@ -40,7 +40,10 @@ This project is a simple but functional **web-based glucose tracking tool**, dev
 3. Submit the form.
 4. See the entry added to the registry and check the glucose status.
 
+## Images of the project
 ![Image of the glucometer in operation](img/glucometer.jpg)
+![Image of the register in operation](img/register.jpg)
+![Image of the criteria](img/criteria.jpg)
 
 ## 📚 Academic Project
 Academic project developed during the Bachelor's Degree in Biomedical Engineering.
