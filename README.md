@@ -12,8 +12,8 @@ This project is a simple but functional **web-based glucose tracking tool**, dev
 - Once submitted:
   - The entry is stored in a visible **registry of records**.
   - The page displays the **glycemic status** based on the glucose level:  
-    - **Hypoglycemia**,  
-    - **Normoglycemia**, or  
+    - **Hypoglycemia**
+    - **Normoglycemia** 
     - **Hyperglycemia**
 
 - The criteria used for classification are clearly explained on the web page itself.
